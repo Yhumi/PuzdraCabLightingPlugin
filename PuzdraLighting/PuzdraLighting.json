@@ -1,0 +1,11 @@
+{
+  "Author": "Yhumi",
+  "Name": "PuzdraLighting",
+  "Punchline": "I promise you have no use for this.",
+  "Description": "Controls TTx3 FastI/O Lighting.",
+  "ApplicableVersion": "any",
+  "Tags": [
+		"cobcab",
+		"arcade"
+  ]
+}
