@@ -102,7 +102,7 @@ namespace PuzdraLighting.LightingControllers
             Weather = 0xFF;
         }
 
-        private void OnWeatherChange()
+        public void OnWeatherChange()
         {
             var phaseData = ConstantData.GetPhaseColours(TerritoryId, Weather);
 
@@ -137,7 +137,7 @@ namespace PuzdraLighting.LightingControllers
         /// Update the current weather state and flag if the weather has changed.
         /// </summary>
         /// <returns>True - If weather has changed.</returns>
-        private unsafe bool CalculateWeather()
+        public unsafe bool CalculateWeather()
         {
             var weatherManager = FFXIVClientStructs.FFXIV.Client.Game.WeatherManager.Instance();
             if (weatherManager == null) { return false; }
@@ -169,6 +169,7 @@ namespace PuzdraLighting.LightingControllers
     {
         Generic,
         PhaseChange,
-        Raise
+        Raise,
+        Test
     }
 }

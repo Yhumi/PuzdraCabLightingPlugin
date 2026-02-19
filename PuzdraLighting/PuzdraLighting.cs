@@ -1,16 +1,18 @@
 using Dalamud.Game.Command;
+using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
-using System.IO;
-using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
-using SamplePlugin;
-using PuzdraLighting.LightingControllers;
 using ECommons;
 using ECommons.DalamudServices;
-using PuzdraLighting.Helpers;
 using ECommons.Throttlers;
 using PuzdraLighting.Data;
+using PuzdraLighting.Helpers;
+using PuzdraLighting.LightingControllers;
+using PuzdraLighting.UI;
+using SamplePlugin;
+using System.IO;
+using static FFXIVClientStructs.FFXIV.Client.Game.NameCache;
 
 namespace PuzdraLighting;
 
@@ -20,6 +22,7 @@ public sealed class PuzdraLighting : IDalamudPlugin
 
     internal static PuzdraLighting P = null;
 
+    internal AnimationTestUI AnimationTestUI;
     internal WindowSystem ws;
     internal Configuration Config;
 
@@ -41,6 +44,7 @@ public sealed class PuzdraLighting : IDalamudPlugin
 
         ws = new();
         Config = P.Config;
+        AnimationTestUI = new AnimationTestUI();
 
         LightingHelper = new FastIOLightingHelper();
         InstanceLighting = new InstanceLighting();
@@ -48,7 +52,9 @@ public sealed class PuzdraLighting : IDalamudPlugin
 
         Svc.Log.Debug($"Initialising Cab Lights.");
         LightingHelper.OpenDriver();
-        
+
+        Svc.PluginInterface.UiBuilder.Draw += ws.Draw;
+        Svc.PluginInterface.UiBuilder.OpenConfigUi += DrawTestUI;
         Svc.Framework.Update += Tick;
     }
 
@@ -59,6 +65,8 @@ public sealed class PuzdraLighting : IDalamudPlugin
         LightingHelper.WriteRGBColourValues(new FastIOColour(0, 0, 0), new FastIOColour(0, 0, 0), new FastIOColour(0, 0, 0));
         LightingHelper.Dispose();
 
+        Svc.PluginInterface.UiBuilder.OpenConfigUi -= DrawTestUI;
+        Svc.PluginInterface.UiBuilder.Draw -= ws.Draw;
         GenericHelpers.Safe(() => Svc.Framework.Update -= Tick);
 
         ws?.RemoveAllWindows();
@@ -86,5 +94,10 @@ public sealed class PuzdraLighting : IDalamudPlugin
 
         if (InstanceLighting.Enabled)
             InstanceLighting.Tick();
+    }
+
+    private void DrawTestUI()
+    {
+        AnimationTestUI.IsOpen = true;
     }
 }
