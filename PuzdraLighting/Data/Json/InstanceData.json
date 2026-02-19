@@ -3,15 +3,15 @@
         "phases": [
             {
                 "weather": 74,
-                "base": [ "0x08", "0xB9", "0x4C" ],
-                "bright": [ "0x1B", "0xF5", "0x6E" ],
-                "dull": [ "0x06", "0x81", "0x35" ]
+                "base": [ "0xE0", "0x3A", "0x3A" ],
+                "bright": [ "0xF0", "0x3B", "0x3B" ],
+                "dull": [ "0xC0", "0x3C", "0x3C" ]
             },
             {
                 "weather": 75,
-                "base": [ "0x7D", "0x69", "0x99" ],
-                "bright": [ "0x97", "0x87", "0xAE" ],
-                "dull": [ "0x64", "0x54", "0x7B" ]
+                "base": [ "0xFB", "0xC7", "0x00" ],
+                "bright": [ "0xFF", "0xFF", "0x01" ],
+                "dull": [ "0xE7", "0xB7", "0x00" ]
             }
         ]
     },
@@ -19,15 +19,15 @@
         "phases": [
             {
                 "weather": 3,
-                "base": [ "0x08", "0xBC", "0x81" ],
-                "bright": [ "0x0A", "0xE2", "0x9B" ],
-                "dull": [ "0x06", "0x96", "0x67" ]
+                "base": [ "0x08", "0xB9", "0x2C" ],
+                "bright": [ "0x1B", "0xF5", "0x4E" ],
+                "dull": [ "0x06", "0x81", "0x15" ]
             },
             {
                 "weather": 21,
-                "base": [ "0x51", "0x44", "0x64" ],
-                "bright": [ "0x64", "0x54", "0x7b" ],
-                "dull": [ "0x3e", "0x34", "0x4d" ]
+                "base": [ "0x9D", "0x4C", "0xBF" ],
+                "bright": [ "0xAD", "0x69", "0xC9" ],
+                "dull": [ "0x64", "0x54", "0x7B" ]
             },
             {
                 "weather": 30,
@@ -37,14 +37,14 @@
             },
             {
                 "weather": 31,
-                "base": [ "0xD9", "0x5A", "0x1F" ],
-                "bright": [ "0xEF", "0x7B", "0x5D" ],
-                "dull": [ "0xB7", "0x4C", "0x1A" ]
+                "base": [ "0xE0", "0x3A", "0x3A" ],
+                "bright": [ "0xF0", "0x3B", "0x3B" ],
+                "dull": [ "0xC0", "0x3C", "0x3C" ]
             },
             {
                 "weather": 32,
                 "base": [ "0xFB", "0xC7", "0x00" ],
-                "bright": [ "0xFF", "0xFF", "0x01" ],
+                "bright": [ "0xFF", "0xCC", "0x01" ],
                 "dull": [ "0xE7", "0xB7", "0x00" ]
             }
         ]
