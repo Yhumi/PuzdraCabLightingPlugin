@@ -1,5 +1,7 @@
 using ECommons.DalamudServices;
+using ECommons.Hooks;
 using ECommons.Throttlers;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using PuzdraLighting.Animations;
 using PuzdraLighting.Data;
 using PuzdraLighting.Helpers;
@@ -29,6 +31,7 @@ namespace PuzdraLighting.LightingControllers
             Enabled = true;
 
             Svc.ClientState.TerritoryChanged += OnInstanceChange;
+            ActionEffect.ActionEffectEntryEvent += OnActionEventEffect;
 
             OnInstanceChange(Svc.ClientState.TerritoryType);
             CalculateWeather();
@@ -65,7 +68,10 @@ namespace PuzdraLighting.LightingControllers
 
             foreach (var anim in animationStack.Values)
             {
-                //Allows for queuing animations based on delays from castbars.
+                if (IsPlayerDead && !anim.RunWhenDead)
+                    continue;
+
+                //Allows for queuing animations based on delays from castbars/effects.
                 if (calcTime < anim.StartTime)
                     continue;
 
@@ -89,9 +95,12 @@ namespace PuzdraLighting.LightingControllers
                 rightPanelCalculation.Count > 0 ? rightPanelCalculation[0] : (IsPlayerDead ? ConstantData.Lights_Off : Base));
         }
 
-        private void OnDamageTaken()
+        private void OnActionEventEffect(uint actionId, ushort animationId, ECommons.Hooks.ActionEffectTypes.ActionEffectType type, uint sourceId, ulong targetId, uint damage)
         {
+            //if (targetId != (Svc.Objects.LocalPlayer?.GameObjectId ?? 0) && targetId != (Svc.Objects.LocalPlayer?.EntityId ?? 0))
+            //    return;
 
+            Svc.Log.Debug($"Target {targetId} has gained {actionId}");
         }
 
         private void OnInstanceChange(ushort territoryId)
@@ -171,5 +180,10 @@ namespace PuzdraLighting.LightingControllers
         PhaseChange,
         Raise,
         Test
+    }
+
+    public enum AnimationType
+    {
+        Pulse
     }
 }

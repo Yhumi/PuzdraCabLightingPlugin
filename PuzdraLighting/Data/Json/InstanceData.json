@@ -13,6 +13,20 @@
                 "bright": [ "0xFF", "0xFF", "0x01" ],
                 "dull": [ "0xE7", "0xB7", "0x00" ]
             }
+        ],
+        "effects": [
+            {
+                "delay": 16500,
+                "type": 0,
+                "duration": 2000,
+                "pulsePeak": 500,
+                "colour1List": [ "0x00", "0x00", "0x00" ],
+                "colour2List": [ "0xFF", "0xFF", "0xFF" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": true
+            }
         ]
     },
     "733": {
