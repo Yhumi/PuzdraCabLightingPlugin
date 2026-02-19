@@ -44,6 +44,12 @@
         <OutputPath>$(DalamudDevPlugins)</OutputPath>
         <NoWarn>CS1591</NoWarn>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="Data\Json\InstanceData.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
     
   <ItemGroup>
     <None Include="Dalamud.Plugin.Bootstrap.targets" />
@@ -51,6 +57,7 @@
 
   <ItemGroup>
     <PackageReference Include="ECommons" Version="3.1.0.22" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
   <ItemGroup>

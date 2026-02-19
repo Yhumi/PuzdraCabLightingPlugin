@@ -1,0 +1,52 @@
+{
+    "733": {
+        "phases": [
+            {
+                "weather": 3,
+                "base": [ "0x08", "0xBC", "0x81" ],
+                "bright": [ "0x0A", "0xE2", "0x9B" ],
+                "dull": [ "0x06", "0x96", "0x67" ]
+            },
+            {
+                "weather": 21,
+                "base": [ "0x51", "0x44", "0x64" ],
+                "bright": [ "0x64", "0x54", "0x7b" ],
+                "dull": [ "0x3e", "0x34", "0x4d" ]
+            },
+            {
+                "weather": 30,
+                "base": [ "0x07", "0x9A", "0xE7" ],
+                "bright": [ "0x1D", "0xAD", "0xF8" ],
+                "dull": [ "0x06", "0x81", "0xC1" ]
+            },
+            {
+                "weather": 31,
+                "base": [ "0xD9", "0x5A", "0x1F" ],
+                "bright": [ "0xEF", "0x7B", "0x5D" ],
+                "dull": [ "0xB7", "0x4C", "0x1A" ]
+            },
+            {
+                "weather": 32,
+                "base": [ "0xFB", "0xC7", "0x00" ],
+                "bright": [ "0xFF", "0xFF", "0x01" ],
+                "dull": [ "0xE7", "0xB7", "0x00" ]
+            }
+        ]
+    },
+    "912": {
+        "phases": [
+            {
+                "weather": 3,
+                "base": [ "0x08", "0xBC", "0x81" ],
+                "bright": [ "0x0A", "0xE2", "0x9B" ],
+                "dull": [ "0x06", "0x96", "0x67" ]
+            },
+            {
+                "weather": 140,
+                "base": [ "0x51", "0x44", "0x64" ],
+                "bright": [ "0x64", "0x54", "0x7b" ],
+                "dull": [ "0x3e", "0x34", "0x4d" ]
+            }
+        ]
+    }
+}
