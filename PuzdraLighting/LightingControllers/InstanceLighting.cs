@@ -51,6 +51,7 @@ namespace PuzdraLighting.LightingControllers
             if (playerDiedThisFrame)
             {
                 //On this frame we can start an animation for death
+                Svc.Log.Debug($"Player has died.");
             }
 
             DateTime calcTime = DateTime.Now;
@@ -92,6 +93,7 @@ namespace PuzdraLighting.LightingControllers
 
         private void OnInstanceChange(ushort territoryId)
         {
+            Svc.Log.Debug($"Territory Change: {TerritoryId} -> {territoryId}");
             TerritoryId = territoryId;
         }
 
@@ -124,6 +126,8 @@ namespace PuzdraLighting.LightingControllers
             //Change the weather, then return true 
             PreviousWeather = Weather;
             Weather = weather;
+
+            Svc.Log.Debug($"Weather Change: {PreviousWeather} -> {Weather}");
 
             return true;
         }

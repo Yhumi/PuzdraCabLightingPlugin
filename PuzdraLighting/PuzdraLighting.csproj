@@ -46,7 +46,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="Data\Json\InstanceData.json" />
+      <Content Include="Data\Json\InstanceData.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
     
   <ItemGroup>

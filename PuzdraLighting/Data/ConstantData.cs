@@ -28,7 +28,7 @@ namespace PuzdraLighting.Data
                 var filePath = Path.Combine(Svc.PluginInterface.AssemblyLocation.DirectoryName!, "Data/Json/InstanceData.json");
                 var jsonData = File.ReadAllText(filePath);
 
-                InstanceData = JsonConvert.DeserializeObject<Dictionary<int, Instance>>(jsonData);
+                InstanceData = JsonConvert.DeserializeObject<Dictionary<ushort, Instance>>(jsonData) ?? [];
             }
             catch (Exception e)
             {
@@ -38,7 +38,7 @@ namespace PuzdraLighting.Data
 
         public static (FastIOColour baseColour, FastIOColour brightColour, FastIOColour dullColour) GetPhaseColours(ushort territoryId, byte weatherId)
         {
-            if (!InstanceData.TryGetValue(territoryId, out Instance currentInstance))
+            if (!InstanceData.TryGetValue(territoryId, out var currentInstance))
                 return (Lights_Magenta, Lights_Magenta, Lights_Magenta);
 
             var phaseData = currentInstance.Phases.FirstOrDefault(x => x.Weather == weatherId);

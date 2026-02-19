@@ -10,6 +10,7 @@ using ECommons;
 using ECommons.DalamudServices;
 using PuzdraLighting.Helpers;
 using ECommons.Throttlers;
+using PuzdraLighting.Data;
 
 namespace PuzdraLighting;
 
@@ -31,6 +32,8 @@ public sealed class PuzdraLighting : IDalamudPlugin
     public PuzdraLighting(IDalamudPluginInterface pluginInterface)
     {
         ECommonsMain.Init(pluginInterface, this, Module.All);
+
+        ConstantData.Init();
 
         P = this;
         P.Config = Configuration.Load();
