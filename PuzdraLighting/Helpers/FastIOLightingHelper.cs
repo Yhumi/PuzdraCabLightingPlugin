@@ -2,6 +2,7 @@ using Dalamud.Bindings.ImGui;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Common.Lua;
 using Lumina.Data;
+using PuzdraLighting.Data;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -54,9 +55,9 @@ namespace PuzdraLighting.Helpers
                 Svc.Log.Debug($"Initialising default lights");
                 
                 WriteRGBColourValues(
-                    new FastIOColour(0xFF, 0x00, 0xFF),
-                    new FastIOColour(0xFF, 0x00, 0xFF),
-                    new FastIOColour(0xFF, 0x00, 0xFF)
+                    ConstantData.Lights_Off,
+                    ConstantData.Lights_Off,
+                    ConstantData.Lights_Off
                 );
 
                 return;
