@@ -82,11 +82,7 @@ namespace PuzdraLighting.Helpers
 
         public int HandleBitShifting(byte front, byte left, byte right)
         {
-            int colorValue = front;
-            colorValue = (colorValue << 8) + left;
-            colorValue = (colorValue << 8) + right;
-
-            return colorValue;
+            return (front << 16) | (left << 8) | right;
         }
 
         private void WriteToRegister(uint register, int data)
