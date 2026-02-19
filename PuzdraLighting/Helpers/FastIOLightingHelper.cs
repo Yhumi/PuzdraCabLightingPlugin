@@ -111,6 +111,25 @@ namespace PuzdraLighting.Helpers
         {
             Red = r; Green = g; Blue = b;
         }
+
+        /// <summary>
+        /// Creates a FastIOColour from the jsonBytes array passed in. Used for creating from JSON fight configurations.
+        /// </summary>
+        /// <param name="jsonBytes">Array of length 3+ where values are string representations of R, G, B bytes respectively.</param>
+        public FastIOColour(List<string> jsonBytes)
+        {
+            //Default the bytes to 0x00 to avoid errors.
+            if (jsonBytes == null)
+                jsonBytes = new List<string>();
+
+            //Quickest way to ensure there's 3 values at least.
+            if (jsonBytes.Count < 3)
+                jsonBytes.AddRange(["0x00", "0x00", "0x00"]);
+
+            Red = Convert.ToByte(jsonBytes[0], 16);
+            Green = Convert.ToByte(jsonBytes[1], 16);
+            Blue = Convert.ToByte(jsonBytes[2], 16);
+        }
     }
 
     internal enum State
