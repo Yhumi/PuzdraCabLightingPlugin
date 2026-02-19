@@ -59,7 +59,7 @@ namespace PuzdraLighting.Data
         public List<Phase> Phases {  get; set; } = new List<Phase>();
 
         [JsonProperty("effects")]
-        public List<AnimationSetup> Effects { get; set; } = new List<AnimationSetup>();
+        public Dictionary<uint, AnimationSetup> Effects { get; set; } = new Dictionary<uint, AnimationSetup>();
     }
 
     internal class Phase
