@@ -41,7 +41,7 @@ namespace PuzdraLighting.LightingControllers
 
         public void Tick()
         {
-            if (!EzThrottler.Throttle("PuzdraLighting.LightingLoop", 100)) return;
+            if (!EzThrottler.Throttle("PuzdraLighting.LightingLoop", 20)) return;
 
             if (CalculateWeather())
                 OnWeatherChange();
@@ -59,6 +59,9 @@ namespace PuzdraLighting.LightingControllers
             List<FastIOColour> frontPanelCalculation = new List<FastIOColour>();
             List<FastIOColour> leftPanelCalculations = new List<FastIOColour>();
             List<FastIOColour> rightPanelCalculation = new List<FastIOColour>();
+
+            //Remove expired animations
+            animationStack.RemoveAll(x => x.Value.EndTime <= calcTime);
 
             foreach (var anim in animationStack.Values)
             {
@@ -95,19 +98,39 @@ namespace PuzdraLighting.LightingControllers
         {
             Svc.Log.Debug($"Territory Change: {TerritoryId} -> {territoryId}");
             TerritoryId = territoryId;
+
+            Weather = 0xFF;
         }
 
         private void OnWeatherChange()
         {
             var phaseData = ConstantData.GetPhaseColours(TerritoryId, Weather);
 
-            //Set the phase colours.
+            //Get the current phase colours.
+            var previousBase = Base;
+            var previousBright = Bright;
+            var previousDull = Dull;
+
+            //Set the new phase colours.
             Base = phaseData.baseColour;
             Bright = phaseData.brightColour;
             Dull = phaseData.dullColour;
 
-            //Start a phase change animation here? When we have fades sorted.
+            Svc.Log.Debug($"Fading between: 0x{previousBase.Red:X2}{previousBase.Green:X2}{previousBase.Blue:X2} -> 0x{Base.Red:X2}{Base.Green:X2}{Base.Blue:X2}");
 
+            //Start a phase change animation here? When we have fades sorted.
+            animationStack.Add(InstanceLightingEventType.PhaseChange, new FadeAnimation()
+            {
+                StartColour = previousBase,
+                EndColour = Base,
+
+                StartTime = DateTime.Now,
+                Duration = 2 * 1000,
+
+                FrontLighting = true,
+                LeftLighting = true,
+                RightLighting = true
+            });
         }
 
         /// <summary>
@@ -145,6 +168,7 @@ namespace PuzdraLighting.LightingControllers
     public enum InstanceLightingEventType
     {
         Generic,
+        PhaseChange,
         Raise
     }
 }

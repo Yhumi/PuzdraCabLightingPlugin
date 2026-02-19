@@ -13,12 +13,12 @@ namespace PuzdraLighting.Animations
         public override FastIOColour CalculateCurrentColourState(DateTime calcTime)
         {
             int msDifference = (int) (calcTime - StartTime).TotalMilliseconds;
-            int animationTimePoint = msDifference % (LoopDurationSeconds * 1000);
-            int highPoint = (LoopDurationSeconds * 1000 / 2) - 1;
+            double animationTimePoint = msDifference % (Duration * 1000);
+            double highPoint = (Duration * 1000 / 2) - 1;
 
-            int redSteps = Math.Abs(LowColour.Red - HighColour.Red) / (LoopDurationSeconds / 2);
-            int greenSteps = Math.Abs(LowColour.Green - HighColour.Green) / (LoopDurationSeconds / 2);
-            int blueSteps = Math.Abs(LowColour.Blue - HighColour.Blue) / (LoopDurationSeconds / 2);
+            double redSteps = Math.Abs(LowColour.Red - HighColour.Red) / (Duration / 2);
+            double greenSteps = Math.Abs(LowColour.Green - HighColour.Green) / (Duration / 2);
+            double blueSteps = Math.Abs(LowColour.Blue - HighColour.Blue) / (Duration / 2);
 
             if (animationTimePoint > highPoint)
             {
