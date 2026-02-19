@@ -28,6 +28,8 @@ namespace PuzdraLighting.LightingControllers
         {
             Enabled = true;
 
+            Svc.ClientState.TerritoryChanged += OnInstanceChange;
+
             OnInstanceChange(Svc.ClientState.TerritoryType);
             CalculateWeather();
             OnWeatherChange();
