@@ -1,5 +1,7 @@
 using ECommons.DalamudServices;
+using ECommons.Hooks;
 using ECommons.Throttlers;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using PuzdraLighting.Animations;
 using PuzdraLighting.Data;
 using PuzdraLighting.Helpers;
@@ -29,14 +31,17 @@ namespace PuzdraLighting.LightingControllers
             Enabled = true;
 
             Svc.ClientState.TerritoryChanged += OnInstanceChange;
+            ActionEffect.ActionEffectEvent += OnActionEvent;
 
             OnInstanceChange(Svc.ClientState.TerritoryType);
             CalculateWeather();
             OnWeatherChange();
-        }
+        } 
 
         public void Dispose()
         {
+            Svc.ClientState.TerritoryChanged -= OnInstanceChange;
+            ActionEffect.ActionEffectEvent -= OnActionEvent;
         }
 
         public void Tick()
@@ -65,7 +70,10 @@ namespace PuzdraLighting.LightingControllers
 
             foreach (var anim in animationStack.Values)
             {
-                //Allows for queuing animations based on delays from castbars.
+                if (IsPlayerDead && !anim.RunWhenDead)
+                    continue;
+
+                //Allows for queuing animations based on delays from castbars/effects.
                 if (calcTime < anim.StartTime)
                     continue;
 
@@ -89,9 +97,19 @@ namespace PuzdraLighting.LightingControllers
                 rightPanelCalculation.Count > 0 ? rightPanelCalculation[0] : (IsPlayerDead ? ConstantData.Lights_Off : Base));
         }
 
-        private void OnDamageTaken()
+        private void OnActionEvent(ECommons.Hooks.ActionEffectTypes.ActionEffectSet set)
         {
+            if (set.Action == null) 
+                return;
 
+            if (set.Target == null) 
+                return;
+
+            var animation = ConstantData.GetAnimationBaseForAction(TerritoryId, set.Action.Value.RowId);
+            if (animation == null) 
+                return;
+
+            animationStack.Add(InstanceLightingEventType.Action, animation);
         }
 
         private void OnInstanceChange(ushort territoryId)
@@ -102,7 +120,7 @@ namespace PuzdraLighting.LightingControllers
             Weather = 0xFF;
         }
 
-        private void OnWeatherChange()
+        public void OnWeatherChange()
         {
             var phaseData = ConstantData.GetPhaseColours(TerritoryId, Weather);
 
@@ -137,7 +155,7 @@ namespace PuzdraLighting.LightingControllers
         /// Update the current weather state and flag if the weather has changed.
         /// </summary>
         /// <returns>True - If weather has changed.</returns>
-        private unsafe bool CalculateWeather()
+        public unsafe bool CalculateWeather()
         {
             var weatherManager = FFXIVClientStructs.FFXIV.Client.Game.WeatherManager.Instance();
             if (weatherManager == null) { return false; }
@@ -169,6 +187,13 @@ namespace PuzdraLighting.LightingControllers
     {
         Generic,
         PhaseChange,
-        Raise
+        Raise,
+        Action,
+        Test
+    }
+
+    public enum AnimationType
+    {
+        Pulse
     }
 }

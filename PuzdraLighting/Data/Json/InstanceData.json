@@ -3,51 +3,66 @@
         "phases": [
             {
                 "weather": 74,
-                "base": [ "0x08", "0xB9", "0x4C" ],
-                "bright": [ "0x1B", "0xF5", "0x6E" ],
-                "dull": [ "0x06", "0x81", "0x35" ]
+                "base": [ "0xE0", "0x3A", "0x3A" ],
+                "bright": [ "0xF0", "0x3B", "0x3B" ],
+                "dull": [ "0xC0", "0x3C", "0x3C" ]
             },
             {
                 "weather": 75,
-                "base": [ "0x7D", "0x69", "0x99" ],
-                "bright": [ "0x97", "0x87", "0xAE" ],
-                "dull": [ "0x64", "0x54", "0x7B" ]
+                "base": [ "0xFB", "0xC7", "0x00" ],
+                "bright": [ "0xFF", "0xFF", "0x01" ],
+                "dull": [ "0xE7", "0xB7", "0x00" ]
             }
-        ]
+        ],
+        "actions": {}
     },
     "733": {
         "phases": [
             {
                 "weather": 3,
-                "base": [ "0x08", "0xBC", "0x81" ],
-                "bright": [ "0x0A", "0xE2", "0x9B" ],
-                "dull": [ "0x06", "0x96", "0x67" ]
+                "base": [ "0x00", "0x78", "0x19" ],
+                "bright": [ "0x00", "0xFF", "0x4B" ],
+                "dull": [ "0x00", "0x3C", "0x12" ]
             },
             {
                 "weather": 21,
-                "base": [ "0x51", "0x44", "0x64" ],
-                "bright": [ "0x64", "0x54", "0x7b" ],
-                "dull": [ "0x3e", "0x34", "0x4d" ]
+                "base": [ "0x73", "0x23", "0x96" ],
+                "bright": [ "0xC3", "0x41", "0xFF" ],
+                "dull": [ "0x41", "0x0F", "0x4B" ]
             },
             {
                 "weather": 30,
-                "base": [ "0x07", "0x9A", "0xE7" ],
-                "bright": [ "0x1D", "0xAD", "0xF8" ],
-                "dull": [ "0x06", "0x81", "0xC1" ]
+                "base": [ "0x00", "0x5F", "0x96" ],
+                "bright": [ "0x00", "0x00", "0xFF" ],
+                "dull": [ "0x00", "0x32", "0x4B" ]
             },
             {
                 "weather": 31,
-                "base": [ "0xD9", "0x5A", "0x1F" ],
-                "bright": [ "0xEF", "0x7B", "0x5D" ],
-                "dull": [ "0xB7", "0x4C", "0x1A" ]
+                "base": [ "0x96", "0x12", "0x12" ],
+                "bright": [ "0xFF", "0x28", "0x28" ],
+                "dull": [ "0x4B", "0x09", "0x09" ]
             },
             {
                 "weather": 32,
-                "base": [ "0xFB", "0xC7", "0x00" ],
-                "bright": [ "0xFF", "0xFF", "0x01" ],
-                "dull": [ "0xE7", "0xB7", "0x00" ]
+                "base": [ "0x96", "0x96", "0x00" ],
+                "bright": [ "0xFF", "0xFF", "0x00" ],
+                "dull": [ "0x46", "0x46", "0x00" ]
             }
-        ]
+        ],
+        "actions": {
+            "9964": {
+                "delay": 5500,
+                "type": 0,
+                "duration": 1000,
+                "pulsePeak": 100,
+                "colour1List": [ "0x96", "0x96", "0x00" ],
+                "colour2List": [ "0xFF", "0xFF", "0x00" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false
+            }
+        }
     },
     "912": {
         "phases": [
@@ -63,6 +78,7 @@
                 "bright": [ "0x64", "0x54", "0x7b" ],
                 "dull": [ "0x3e", "0x34", "0x4d" ]
             }
-        ]
+        ],
+        "actions": {}
     }
 }
