@@ -47,6 +47,14 @@ namespace PuzdraLighting.UI
 
         public override void Draw()
         {
+            var refSet = P.Config.VerboseLogColourSets;
+
+            if (ImGui.Checkbox($"Verbose Log Colour Values", ref refSet)) 
+            {
+                P.Config.VerboseLogColourSets = refSet;
+                P.Config.Save();
+            }
+
             ImGui.TextWrapped($"Test Animations");
 
             ImGui.Separator();

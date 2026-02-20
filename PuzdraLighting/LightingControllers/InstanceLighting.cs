@@ -7,6 +7,7 @@ using PuzdraLighting.Data;
 using PuzdraLighting.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PuzdraLighting.LightingControllers
@@ -105,6 +106,12 @@ namespace PuzdraLighting.LightingControllers
             if (set.Target == null) 
                 return;
 
+            var partyIds = Svc.Party.Select(x => x.EntityId);
+            if (partyIds.Contains(set.Source?.EntityId ?? 0))
+                return;
+
+            Svc.Log.Verbose($"[{set.Source?.Name ?? "Unknown Actor"}] Cast: {set.Action.Value.Name} ({set.Action.Value.RowId})");
+
             var animation = ConstantData.GetAnimationBaseForAction(TerritoryId, set.Action.Value.RowId);
             if (animation == null) 
                 return;
@@ -143,7 +150,8 @@ namespace PuzdraLighting.LightingControllers
                 EndColour = Base,
 
                 StartTime = DateTime.Now,
-                Duration = 2 * 1000,
+                HoldDelay = phaseData.delay,
+                Duration = phaseData.duration,
 
                 FrontLighting = true,
                 LeftLighting = true,

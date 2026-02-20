@@ -91,11 +91,12 @@ namespace PuzdraLighting.Helpers
             if (FastIOState != State.Open)
                 return;
 
-            Svc.Log.Verbose($"Writing {data:X8} to {register:X4}.");
+            if (P.Config.VerboseLogColourSets)
+                Svc.Log.Verbose($"Writing {data:X8} to {register:X4}.");
 
             int deviceResult = 0;
             int resp = iDmacDrvRegisterWrite(FileHandle, register, data, &deviceResult);
-            Svc.Log.Verbose($"iDmacDrvRegisterWrite: {resp}, DeviceResult: {deviceResult}");
+            //Svc.Log.Verbose($"iDmacDrvRegisterWrite: {resp}, DeviceResult: {deviceResult}");
 
             if (resp != 0)
                 FastIOState = State.Closed;

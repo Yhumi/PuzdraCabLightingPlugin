@@ -10,9 +10,15 @@ namespace PuzdraLighting.Animations
         public FastIOColour StartColour { get; set; }
         public FastIOColour EndColour { get; set; }
 
+        public double HoldDelay { get; set; }
+
         public override FastIOColour CalculateCurrentColourState(DateTime calcTime)
         {
-            var timeElapsed = (calcTime - StartTime).TotalMilliseconds;
+            var trueStart = StartTime.AddMilliseconds(HoldDelay);
+            if (calcTime < trueStart)
+                return StartColour;
+
+            var timeElapsed = (calcTime - trueStart).TotalMilliseconds;
             var timeElapsedFraction = timeElapsed / Duration;
 
             var lerpValue = LerpHelper.EaseInOutSine(timeElapsedFraction);
