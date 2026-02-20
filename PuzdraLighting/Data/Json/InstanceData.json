@@ -14,20 +14,7 @@
                 "dull": [ "0xE7", "0xB7", "0x00" ]
             }
         ],
-        "effects": [
-            {
-                "delay": 16500,
-                "type": 0,
-                "duration": 2000,
-                "pulsePeak": 500,
-                "colour1List": [ "0x00", "0x00", "0x00" ],
-                "colour2List": [ "0xFF", "0xFF", "0xFF" ],
-                "front": true,
-                "left": true,
-                "right": true,
-                "runDead": true
-            }
-        ]
+        "actions": {}
     },
     "733": {
         "phases": [
@@ -61,7 +48,21 @@
                 "bright": [ "0xFF", "0xFF", "0x00" ],
                 "dull": [ "0x46", "0x46", "0x00" ]
             }
-        ]
+        ],
+        "actions": {
+            "9964": {
+                "delay": 5500,
+                "type": 0,
+                "duration": 1000,
+                "pulsePeak": 100,
+                "colour1List": [ "0x96", "0x96", "0x00" ],
+                "colour2List": [ "0xFF", "0xFF", "0x00" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false
+            }
+        }
     },
     "912": {
         "phases": [
@@ -77,6 +78,7 @@
                 "bright": [ "0x64", "0x54", "0x7b" ],
                 "dull": [ "0x3e", "0x34", "0x4d" ]
             }
-        ]
+        ],
+        "actions": {}
     }
 }

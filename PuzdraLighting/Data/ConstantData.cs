@@ -51,6 +51,17 @@ namespace PuzdraLighting.Data
 
             return (phaseData.BaseColour, phaseData.BrightColour, phaseData.DullColour);
         }
+
+        public static AnimationBase? GetAnimationBaseForAction(ushort territoryId, uint actionId)
+        {
+            if (!InstanceData.TryGetValue(territoryId, out var currentInstance))
+                return null;
+
+            if (!currentInstance.Actions.TryGetValue(actionId, out var currentAction))
+                return null;
+
+            return currentAction.GetAnimation();
+        }
     }
 
     internal class Instance
@@ -58,8 +69,8 @@ namespace PuzdraLighting.Data
         [JsonProperty("phases")]
         public List<Phase> Phases {  get; set; } = new List<Phase>();
 
-        [JsonProperty("effects")]
-        public Dictionary<uint, AnimationSetup> Effects { get; set; } = new Dictionary<uint, AnimationSetup>();
+        [JsonProperty("actions")]
+        public Dictionary<uint, AnimationSetup> Actions { get; set; } = new Dictionary<uint, AnimationSetup>();
     }
 
     internal class Phase

@@ -31,15 +31,17 @@ namespace PuzdraLighting.LightingControllers
             Enabled = true;
 
             Svc.ClientState.TerritoryChanged += OnInstanceChange;
-            ActionEffect.ActionEffectEntryEvent += OnActionEventEffect;
+            ActionEffect.ActionEffectEvent += OnActionEvent;
 
             OnInstanceChange(Svc.ClientState.TerritoryType);
             CalculateWeather();
             OnWeatherChange();
-        }
+        } 
 
         public void Dispose()
         {
+            Svc.ClientState.TerritoryChanged -= OnInstanceChange;
+            ActionEffect.ActionEffectEvent -= OnActionEvent;
         }
 
         public void Tick()
@@ -95,12 +97,19 @@ namespace PuzdraLighting.LightingControllers
                 rightPanelCalculation.Count > 0 ? rightPanelCalculation[0] : (IsPlayerDead ? ConstantData.Lights_Off : Base));
         }
 
-        private void OnActionEventEffect(uint actionId, ushort animationId, ECommons.Hooks.ActionEffectTypes.ActionEffectType type, uint sourceId, ulong targetId, uint damage)
+        private void OnActionEvent(ECommons.Hooks.ActionEffectTypes.ActionEffectSet set)
         {
-            //if (targetId != (Svc.Objects.LocalPlayer?.GameObjectId ?? 0) && targetId != (Svc.Objects.LocalPlayer?.EntityId ?? 0))
-            //    return;
+            if (set.Action == null) 
+                return;
 
-            Svc.Log.Debug($"Target {targetId} has gained {actionId}");
+            if (set.Target == null) 
+                return;
+
+            var animation = ConstantData.GetAnimationBaseForAction(TerritoryId, set.Action.Value.RowId);
+            if (animation == null) 
+                return;
+
+            animationStack.Add(InstanceLightingEventType.Action, animation);
         }
 
         private void OnInstanceChange(ushort territoryId)
@@ -179,6 +188,7 @@ namespace PuzdraLighting.LightingControllers
         Generic,
         PhaseChange,
         Raise,
+        Action,
         Test
     }
 
