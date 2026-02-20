@@ -19,39 +19,49 @@
     "733": {
         "phases": [
             {
-                "weather": 3,
+                "weather": 2,
                 "base": [ "0x00", "0x78", "0x19" ],
                 "bright": [ "0x00", "0xFF", "0x4B" ],
-                "dull": [ "0x00", "0x3C", "0x12" ]
+                "dull": [ "0x00", "0x3C", "0x12" ],
+                "delay": 0,
+                "duration": 2000
             },
             {
                 "weather": 21,
                 "base": [ "0x73", "0x23", "0x96" ],
                 "bright": [ "0xC3", "0x41", "0xFF" ],
-                "dull": [ "0x41", "0x0F", "0x4B" ]
+                "dull": [ "0x41", "0x0F", "0x4B" ],
+                "delay": 0,
+                "duration": 4000
             },
             {
                 "weather": 30,
                 "base": [ "0x00", "0x5F", "0x96" ],
                 "bright": [ "0x00", "0x00", "0xFF" ],
-                "dull": [ "0x00", "0x32", "0x4B" ]
+                "dull": [ "0x00", "0x32", "0x4B" ],
+                "delay": 0,
+                "duration": 2000
             },
             {
                 "weather": 31,
                 "base": [ "0x96", "0x12", "0x12" ],
                 "bright": [ "0xFF", "0x28", "0x28" ],
-                "dull": [ "0x4B", "0x09", "0x09" ]
+                "dull": [ "0x4B", "0x09", "0x09" ],
+                "delay": 0,
+                "duration": 2000
             },
             {
                 "weather": 32,
                 "base": [ "0x96", "0x96", "0x00" ],
                 "bright": [ "0xFF", "0xFF", "0x00" ],
-                "dull": [ "0x46", "0x46", "0x00" ]
+                "dull": [ "0x46", "0x46", "0x00" ],
+                "delay": 1000,
+                "duration": 1000
             }
         ],
         "actions": {
             "9964": {
-                "delay": 5500,
+                "delay": 2500,
                 "type": 0,
                 "duration": 1000,
                 "pulsePeak": 100,

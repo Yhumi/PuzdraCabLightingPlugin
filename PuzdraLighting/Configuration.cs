@@ -10,6 +10,7 @@ namespace SamplePlugin;
 public class Configuration : IPluginConfiguration
 {
     public int Version { get; set; } = 0;
+    public bool VerboseLogColourSets { get; set; } = false;
 
     public void Save()
     {

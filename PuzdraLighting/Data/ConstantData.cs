@@ -40,16 +40,16 @@ namespace PuzdraLighting.Data
             }
         }
 
-        public static (FastIOColour baseColour, FastIOColour brightColour, FastIOColour dullColour) GetPhaseColours(ushort territoryId, byte weatherId)
+        public static (FastIOColour baseColour, FastIOColour brightColour, FastIOColour dullColour, double duration, double delay) GetPhaseColours(ushort territoryId, byte weatherId)
         {
             if (!InstanceData.TryGetValue(territoryId, out var currentInstance))
-                return (Lights_Magenta, Lights_Magenta, Lights_Magenta);
+                return (Lights_Magenta, Lights_Magenta, Lights_Magenta, 2000, 0);
 
             var phaseData = currentInstance.Phases.FirstOrDefault(x => x.Weather == weatherId);
             if (phaseData == null)
-                return (Lights_Magenta, Lights_Magenta, Lights_Magenta);
+                return (Lights_Magenta, Lights_Magenta, Lights_Magenta, 2000, 0);
 
-            return (phaseData.BaseColour, phaseData.BrightColour, phaseData.DullColour);
+            return (phaseData.BaseColour, phaseData.BrightColour, phaseData.DullColour, phaseData.DurationMs, phaseData.DelayMs);
         }
 
         public static AnimationBase? GetAnimationBaseForAction(ushort territoryId, uint actionId)
@@ -86,6 +86,12 @@ namespace PuzdraLighting.Data
 
         [JsonProperty("dull")]
         public List<string> Dull { get; set; } = new List<string>();
+
+        [JsonProperty("delay")]
+        public double DelayMs { get; set; }
+
+        [JsonProperty("duration")]
+        public double DurationMs { get; set; }
 
         public FastIOColour BaseColour { get { return new FastIOColour(Base); } }
         public FastIOColour BrightColour { get { return new FastIOColour(Bright); } }
