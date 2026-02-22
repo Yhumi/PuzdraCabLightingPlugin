@@ -39,8 +39,8 @@
                 "base": [ "0x00", "0x5F", "0x96" ],
                 "bright": [ "0x00", "0x00", "0xFF" ],
                 "dull": [ "0x00", "0x32", "0x4B" ],
-                "delay": 0,
-                "duration": 2000
+                "delay": 12000,
+                "duration": 1000
             },
             {
                 "weather": 31,
@@ -55,18 +55,66 @@
                 "base": [ "0x96", "0x96", "0x00" ],
                 "bright": [ "0xFF", "0xFF", "0x00" ],
                 "dull": [ "0x46", "0x46", "0x00" ],
-                "delay": 1000,
+                "delay": 3000,
                 "duration": 1000
             }
         ],
         "actions": {
-            "9964": {
-                "delay": 2500,
+            "9917": {
+                "delay": 900,
                 "type": 0,
                 "duration": 1000,
                 "pulsePeak": 100,
-                "colour1List": [ "0x96", "0x96", "0x00" ],
-                "colour2List": [ "0xFF", "0xFF", "0x00" ],
+                "colour1List": [ "base" ],
+                "colour2List": [ "bright" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false
+            },
+            "9940": {
+                "delay": 900,
+                "type": 0,
+                "duration": 300,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "bright" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false
+            },
+			"9962": {
+                "delay": 900,
+                "type": 0,
+                "duration": 400,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xFF", "0xFF", "0xFF" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false
+            },
+			"9963": {
+                "delay": 900,
+                "type": 0,
+                "duration": 400,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xFF", "0xFF", "0xFF" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false
+            },
+			"9964": {
+                "delay": 900,
+                "type": 0,
+                "duration": 1000,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xFF", "0xFF", "0xFF" ],
                 "front": true,
                 "left": true,
                 "right": true,

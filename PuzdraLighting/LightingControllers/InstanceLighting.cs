@@ -1,3 +1,4 @@
+using ECommons;
 using ECommons.DalamudServices;
 using ECommons.Hooks;
 using ECommons.Throttlers;
@@ -21,7 +22,7 @@ namespace PuzdraLighting.LightingControllers
         public byte Weather { get; set; } = 0xFF;
         public bool IsPlayerDead { get; set; } = false;
 
-        public Dictionary<InstanceLightingEventType, AnimationBase> animationStack = new Dictionary<InstanceLightingEventType, AnimationBase>();
+        public Dictionary<string, AnimationBase> animationStack = new Dictionary<string, AnimationBase>();
 
         public FastIOColour Base;
         public FastIOColour Bright;
@@ -67,7 +68,7 @@ namespace PuzdraLighting.LightingControllers
             List<FastIOColour> rightPanelCalculation = new List<FastIOColour>();
 
             //Remove expired animations
-            animationStack.RemoveAll(x => x.Value.EndTime <= calcTime);
+            animationStack.RemoveAll(x => x.Value.GetEndTime() < calcTime);
 
             foreach (var anim in animationStack.Values)
             {
@@ -106,17 +107,24 @@ namespace PuzdraLighting.LightingControllers
             if (set.Target == null) 
                 return;
 
-            var partyIds = Svc.Party.Select(x => x.EntityId);
-            if (partyIds.Contains(set.Source?.EntityId ?? 0))
+            if (set.Source == null)
                 return;
 
-            Svc.Log.Verbose($"[{set.Source?.Name ?? "Unknown Actor"}] Cast: {set.Action.Value.Name} ({set.Action.Value.RowId})");
+            //Can use this to eventually handle player casts separately maybe?
+            //Unsure.
+            var partyIds = Svc.Party.Select(x => x.EntityId);
+            if (partyIds.Contains(set.Source.EntityId))
+                return;
 
-            var animation = ConstantData.GetAnimationBaseForAction(TerritoryId, set.Action.Value.RowId);
+            //Filtering out autos with no name from the logs.
+            if (!String.IsNullOrWhiteSpace(set.Action.Value.Name.ExtractText()))
+                Svc.Log.Verbose($"[{set.Source?.Name ?? "Unknown Actor"}] Cast: {set.Action.Value.Name} ({set.Action.Value.RowId})");
+
+            var animation = ConstantData.GetAnimationBaseForAction(TerritoryId, set.Action.Value.RowId, Dull, Base, Bright);
             if (animation == null) 
                 return;
 
-            animationStack.Add(InstanceLightingEventType.Action, animation);
+            animationStack.Add($"{nameof(InstanceLightingEventType.Action)}-{set.Action.Value.RowId}-{DateTime.Now.ToString("HH:mm:ss.fffffff")}", animation);
         }
 
         private void OnInstanceChange(ushort territoryId)
@@ -141,10 +149,10 @@ namespace PuzdraLighting.LightingControllers
             Bright = phaseData.brightColour;
             Dull = phaseData.dullColour;
 
-            Svc.Log.Debug($"Fading between: 0x{previousBase.Red:X2}{previousBase.Green:X2}{previousBase.Blue:X2} -> 0x{Base.Red:X2}{Base.Green:X2}{Base.Blue:X2}");
+            Svc.Log.Debug($"Fading between: 0x{previousBase.Red:X2}{previousBase.Green:X2}{previousBase.Blue:X2} -> 0x{Base.Red:X2}{Base.Green:X2}{Base.Blue:X2}. HoldDelay: {phaseData.delay}ms, Duration: {phaseData.duration}ms");
 
             //Start a phase change animation here? When we have fades sorted.
-            animationStack.Add(InstanceLightingEventType.PhaseChange, new FadeAnimation()
+            animationStack.Add($"{nameof(InstanceLightingEventType.PhaseChange)}-{Weather}-{DateTime.Now.ToString("HH:mm:ss.fffffff")}", new FadeAnimation()
             {
                 StartColour = previousBase,
                 EndColour = Base,

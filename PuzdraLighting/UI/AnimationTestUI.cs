@@ -102,7 +102,7 @@ namespace PuzdraLighting.UI
 
                 Svc.Log.Debug($"Adding Pulse Animation. Duration: {Duration}, PeakPointMS: {PulsePeak}, StartEndColour: #{BaseR:X2}{BaseG:X2}{BaseB:X2}, PeakColour: {ToR:X2}{ToG:X2}{ToB:X2}");
 
-                P.InstanceLighting.animationStack.Add(InstanceLightingEventType.Test, newPulseAnim);
+                P.InstanceLighting.animationStack.Add($"{nameof(InstanceLightingEventType.Test)}-{DateTime.Now.ToString("HH:mm:ss.fffffff")}", newPulseAnim);
             }
 
             if (ImGui.Button($"Reset Override###Reset Override"))

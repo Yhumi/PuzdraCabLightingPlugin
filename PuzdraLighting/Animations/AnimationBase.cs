@@ -1,3 +1,4 @@
+using PuzdraLighting.Data;
 using PuzdraLighting.Helpers;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,12 @@ namespace PuzdraLighting.Animations
 
         public virtual FastIOColour CalculateCurrentColourState(DateTime calcTime)
         {
-            return new FastIOColour(0, 0, 0);
+            return ConstantData.Lights_Off;
+        }
+
+        public virtual DateTime GetEndTime()
+        {
+            return EndTime; 
         }
     }
 }

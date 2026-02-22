@@ -1,3 +1,4 @@
+using ECommons.DalamudServices;
 using PuzdraLighting.Helpers;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,10 @@ namespace PuzdraLighting.Animations
         {
             var trueStart = StartTime.AddMilliseconds(HoldDelay);
             if (calcTime < trueStart)
+            {
+                Svc.Log.Verbose($"[FadeAnimation] Current Calc Time: {calcTime}. Holding until: {trueStart}");
                 return StartColour;
+            }
 
             var timeElapsed = (calcTime - trueStart).TotalMilliseconds;
             var timeElapsedFraction = timeElapsed / Duration;
@@ -35,6 +39,11 @@ namespace PuzdraLighting.Animations
                 (byte) (StartColour.Red + (redDifference * redMultiplier)), 
                 (byte) (StartColour.Green + (greenDifference * greenMultiplier)), 
                 (byte) (StartColour.Blue + (blueDifference * blueMultiplier)));
+        }
+
+        public override DateTime GetEndTime()
+        {
+            return StartTime.AddMilliseconds(HoldDelay + Duration);
         }
     }
 }

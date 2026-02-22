@@ -23,7 +23,7 @@ namespace PuzdraLighting.Data
         public static readonly FastIOColour Lights_Tank = new FastIOColour(0x41, 0x55, 0xAB);
         public static readonly FastIOColour Lights_DPS = new FastIOColour(0x93, 0x43, 0x46);
 
-        public static readonly FastIOColour Lights_Magenta = new FastIOColour(0xFF, 0x0, 0xFF);
+        public static readonly FastIOColour Lights_Magenta = new FastIOColour(0xDC, 0x0, 0xDC);
 
         public static void Init()
         {
@@ -52,7 +52,7 @@ namespace PuzdraLighting.Data
             return (phaseData.BaseColour, phaseData.BrightColour, phaseData.DullColour, phaseData.DurationMs, phaseData.DelayMs);
         }
 
-        public static AnimationBase? GetAnimationBaseForAction(ushort territoryId, uint actionId)
+        public static AnimationBase? GetAnimationBaseForAction(ushort territoryId, uint actionId, FastIOColour dullColour, FastIOColour baseColour, FastIOColour brightColour)
         {
             if (!InstanceData.TryGetValue(territoryId, out var currentInstance))
                 return null;
@@ -60,14 +60,16 @@ namespace PuzdraLighting.Data
             if (!currentInstance.Actions.TryGetValue(actionId, out var currentAction))
                 return null;
 
-            return currentAction.GetAnimation();
+            Svc.Log.Debug($"Getting animation for actionId {actionId}");
+
+            return currentAction.GetAnimation(dullColour, baseColour, brightColour);
         }
     }
 
     internal class Instance
     {
         [JsonProperty("phases")]
-        public List<Phase> Phases {  get; set; } = new List<Phase>();
+        public List<Phase> Phases { get; set; } = new List<Phase>();
 
         [JsonProperty("actions")]
         public Dictionary<uint, AnimationSetup> Actions { get; set; } = new Dictionary<uint, AnimationSetup>();
@@ -130,30 +132,89 @@ namespace PuzdraLighting.Data
         [JsonProperty("runDead")]
         public bool RunWhenDead { get; set; }
 
-        public FastIOColour Colour1 { get { return new FastIOColour(Colour1List); } }
-        public FastIOColour Colour2 { get { return new FastIOColour(Colour2List); } }
-
-        public AnimationBase? GetAnimation()
+        public FastIOColour Colour1
         {
-            switch(AnimationType)
+            get
+            {
+                if (Colour1List.Count == 3)
+                    return new FastIOColour(Colour1List);
+                else
+                    return ConstantData.Lights_Off;
+            }
+        }
+        public FastIOColour Colour2
+        {
+            get
+            {
+                if (Colour2List.Count == 3)
+                    return new FastIOColour(Colour2List);
+                else
+                    return ConstantData.Lights_Off;
+            }
+        }
+
+        public AnimationBase? GetAnimation(FastIOColour dullColour, FastIOColour baseColour, FastIOColour brightColour)
+        {
+            switch (AnimationType)
             {
                 case AnimationType.Pulse:
-                    return GetPulseAnimation();
+                    return GetPulseAnimation(dullColour, baseColour, brightColour);
                 default:
                     return null;
             }
         }
 
-        private PulseAnimation GetPulseAnimation()
+        private PulseAnimation GetPulseAnimation(FastIOColour dullColour, FastIOColour baseColour, FastIOColour brightColour)
         {
+            FastIOColour startColour = ConstantData.Lights_Off;
+            FastIOColour peakColour = ConstantData.Lights_Off;
+
+            if (Colour1List.Count < 3)
+            {
+                switch(Colour1List[0].ToLower())
+                {
+                    case "dull":
+                        startColour = dullColour;
+                        break;
+                    case "bright":
+                        startColour = brightColour;
+                        break;
+                    case "base":
+                    default:
+                        startColour = baseColour;
+                        break;
+                }
+            }
+            else { startColour = Colour1; }
+
+            if (Colour2List.Count < 3)
+            {
+                switch (Colour2List[0].ToLower())
+                {
+                    case "dull":
+                        peakColour = dullColour;
+                        break;
+                    case "bright":
+                        peakColour = brightColour;
+                        break;
+                    case "base":
+                    default:
+                        peakColour = baseColour;
+                        break;    
+                }
+            }
+            else { peakColour = Colour2; }
+
+            Svc.Log.Debug($"Pulse Animation. StartColour: {startColour}, PeakColour: {peakColour}.");
+
             return new PulseAnimation()
             {
                 StartTime = DateTime.Now.AddMilliseconds(DelayMs),
                 Duration = DurationMs,
                 PeakPointMs = PulsePeakMs ?? 0,
 
-                StartEndColour = Colour1,
-                PeakColour = Colour2,
+                StartEndColour = startColour,
+                PeakColour = peakColour,
 
                 FrontLighting = Front,
                 LeftLighting = Left,

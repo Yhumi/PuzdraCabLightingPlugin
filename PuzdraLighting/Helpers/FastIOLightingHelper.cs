@@ -132,6 +132,11 @@ namespace PuzdraLighting.Helpers
             Green = Convert.ToByte(jsonBytes[1], 16);
             Blue = Convert.ToByte(jsonBytes[2], 16);
         }
+
+        public readonly override string ToString()
+        {
+            return $"FastIOColour: #{Red:X2}{Green:X2}{Blue:X2}";
+        }
     }
 
     internal enum State

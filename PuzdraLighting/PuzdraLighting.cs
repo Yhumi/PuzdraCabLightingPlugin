@@ -62,7 +62,7 @@ public sealed class PuzdraLighting : IDalamudPlugin
     {
         InstanceLighting.Dispose();
 
-        LightingHelper.WriteRGBColourValues(new FastIOColour(0, 0, 0), new FastIOColour(0, 0, 0), new FastIOColour(0, 0, 0));
+        LightingHelper.WriteRGBColourValues(ConstantData.Lights_Off, ConstantData.Lights_Off, ConstantData.Lights_Off);
         LightingHelper.Dispose();
 
         Svc.PluginInterface.UiBuilder.OpenConfigUi -= DrawTestUI;
