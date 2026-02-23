@@ -37,7 +37,7 @@
             {
                 "weather": 30,
                 "base": [ "0x00", "0x5F", "0x96" ],
-                "bright": [ "0x00", "0x00", "0xFF" ],
+                "bright": [ "0x00", "0xA0", "0xFF" ],
                 "dull": [ "0x00", "0x32", "0x4B" ],
                 "delay": 12000,
                 "duration": 1000
@@ -60,18 +60,202 @@
             }
         ],
         "actions": {
+            //Plummet
+            "9896": {
+                "delay": 1100,
+                "type": 0,
+                "duration": 1000,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0x00", "0xFF", "0x4B" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": true
+            },
+            //Death Sentence
+            "9897": {
+                "delay": 800,
+                "type": 0,
+                "duration": 1000,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0x00", "0x3C", "0x12" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": true,
+                "takenDamageOnly": false
+            },
+            //Twin Fireball
+            "9900": {
+                "delay": 700,
+                "type": 0,
+                "duration": 1000,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0x4B", "0x09", "0x09" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": true
+            },
+			//Hatch
+            "9903": {
+                "delay": 300,
+                "type": 0,
+                "duration": 800,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0x05", "0x00", "0x40" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": true
+            },
+			//Aetheric Profusion
+            "9905": {
+                "delay": 900,
+                "type": 0,
+                "duration": 2200,
+                "pulsePeak": 200,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xB4", "0xFF", "0xB4" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": false
+            },
+            //Bahamut's Claw
+            "9909": {
+                "delay": 500,
+                "type": 0,
+                "duration": 200,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xC3", "0x41", "0xFF" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": true,
+                "takenDamageOnly": false
+            },
+            //Ravensbeak
+            "9910": {
+                "delay": 600,
+                "type": 0,
+                "duration": 1000,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0x41", "0x0F", "0x4B" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": true,
+                "takenDamageOnly": false
+            },
+            //Thermionic Beam
             "9917": {
                 "delay": 900,
                 "type": 0,
                 "duration": 1000,
                 "pulsePeak": 100,
                 "colour1List": [ "base" ],
-                "colour2List": [ "bright" ],
+                "colour2List": [ "0xC3", "0x41", "0xFF" ],
                 "front": true,
                 "left": true,
                 "right": true,
-                "runDead": false
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": false
             },
+            //Nael Fireball
+            "9925": {
+                "delay": 1000,
+                "type": 0,
+                "duration": 600,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0x4B", "0x09", "0x09" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": true
+            },
+            //Nael Iceball
+            "9926": {
+                "delay": 1000,
+                "type": 0,
+                "duration": 600,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0x3C", "0xBE", "0xBE" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": true,
+                "takenDamageOnly": false
+            },
+			//Chain Lightning (Hit)
+            "9928": {
+                "delay": 200,
+                "type": 0,
+                "duration": 300,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0x82", "0x00", "0x82" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": true,
+                "takenDamageOnly": false
+            },
+            //P3 Transition KB
+            "9937": {
+                "delay": 0,
+                "type": 0,
+                "duration": 600,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xFF", "0x28", "0x28" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": false
+            },
+            //P3 Transition Small Pulse
+            "9938": {
+                "delay": 100,
+                "type": 0,
+                "duration": 500,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xFF", "0x28", "0x28" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": false
+            },
+            //Flare Breath
             "9940": {
                 "delay": 900,
                 "type": 0,
@@ -82,9 +266,102 @@
                 "front": true,
                 "left": true,
                 "right": true,
-                "runDead": false
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": true
             },
-			"9962": {
+			//Flatten
+            "9941": {
+                "delay": 800,
+                "type": 0,
+                "duration": 1000,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "dull" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": true,
+                "takenDamageOnly": false
+            },
+			//Gigaflare
+            "9942": {
+                "delay": 3400,
+                "type": 0,
+                "duration": 1800,
+                "pulsePeak": 300,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xFF", "0xFF", "0xFF" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": false
+            },
+			//Tempest Wing
+            "9944": {
+                "delay": 100,
+                "type": 0,
+                "duration": 1200,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0x0A", "0x3C", "0x0A" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": true,
+                "takenDamageOnly": false
+            },
+			//Earthshaker
+            "9946": {
+                "delay": 1000,
+                "type": 0,
+                "duration": 800,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xAF", "0x5A", "0x23" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": true
+            },
+			//Megaflare Spread
+            "9948": {
+                "delay": 500,
+                "type": 0,
+                "duration": 600,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xF5", "0x64", "0x64" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": true
+            },
+			//Megaflare Stack
+            "9950": {
+                "delay": 500,
+                "type": 0,
+                "duration": 600,
+                "pulsePeak": 100,
+                "colour1List": [ "base" ],
+                "colour2List": [ "0xF5", "0x64", "0x41" ],
+                "front": true,
+                "left": true,
+                "right": true,
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": true
+            },
+            //Akh Morn - First Hit
+            "9962": {
                 "delay": 900,
                 "type": 0,
                 "duration": 400,
@@ -94,9 +371,12 @@
                 "front": true,
                 "left": true,
                 "right": true,
-                "runDead": false
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": true
             },
-			"9963": {
+            //Akh Morn - Hits 2+
+            "9963": {
                 "delay": 900,
                 "type": 0,
                 "duration": 400,
@@ -106,9 +386,12 @@
                 "front": true,
                 "left": true,
                 "right": true,
-                "runDead": false
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": true
             },
-			"9964": {
+            //Morn Afah
+            "9964": {
                 "delay": 900,
                 "type": 0,
                 "duration": 1000,
@@ -118,7 +401,9 @@
                 "front": true,
                 "left": true,
                 "right": true,
-                "runDead": false
+                "runDead": false,
+                "playerTargetOnly": false,
+                "takenDamageOnly": false
             }
         }
     },

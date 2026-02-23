@@ -48,10 +48,18 @@ namespace PuzdraLighting.UI
         public override void Draw()
         {
             var refSet = P.Config.VerboseLogColourSets;
+            var logUnnamed = P.Config.LogUnnamedActions;
 
             if (ImGui.Checkbox($"Verbose Log Colour Values", ref refSet)) 
             {
                 P.Config.VerboseLogColourSets = refSet;
+                P.Config.Save();
+            }
+
+            ImGui.SameLine();
+            if (ImGui.Checkbox($"Log Unnammed Action", ref logUnnamed))
+            {
+                P.Config.LogUnnamedActions = logUnnamed;
                 P.Config.Save();
             }
 

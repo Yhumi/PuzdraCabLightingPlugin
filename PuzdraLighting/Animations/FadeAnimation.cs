@@ -27,18 +27,14 @@ namespace PuzdraLighting.Animations
 
             var lerpValue = LerpHelper.EaseInOutSine(timeElapsedFraction);
 
-            var redDifference = Math.Abs(EndColour.Red - StartColour.Red) * lerpValue;
-            var greenDifference = Math.Abs(EndColour.Green - StartColour.Green) * lerpValue;
-            var blueDifference = Math.Abs(EndColour.Blue - StartColour.Blue) * lerpValue;
-
-            var redMultiplier = (EndColour.Red - StartColour.Red) < 0 ? -1 : 1;
-            var greenMultiplier = (EndColour.Green - StartColour.Green) < 0 ? -1 : 1;
-            var blueMultiplier = (EndColour.Blue - StartColour.Blue) < 0 ? -1 : 1;
+            var lerpRed = (EndColour.Red - StartColour.Red) * lerpValue + StartColour.Red;
+            var lerpGreen = (EndColour.Green - StartColour.Green) * lerpValue + StartColour.Green;
+            var lerpBlue = (EndColour.Blue - StartColour.Blue) * lerpValue + StartColour.Blue;
 
             return new FastIOColour(
-                (byte) (StartColour.Red + (redDifference * redMultiplier)), 
-                (byte) (StartColour.Green + (greenDifference * greenMultiplier)), 
-                (byte) (StartColour.Blue + (blueDifference * blueMultiplier)));
+                (byte)lerpRed,
+                (byte)lerpGreen,
+                (byte)lerpBlue);
         }
 
         public override DateTime GetEndTime()

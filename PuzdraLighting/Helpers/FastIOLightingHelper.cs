@@ -5,6 +5,8 @@ using Lumina.Data;
 using PuzdraLighting.Data;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -136,6 +138,26 @@ namespace PuzdraLighting.Helpers
         public readonly override string ToString()
         {
             return $"FastIOColour: #{Red:X2}{Green:X2}{Blue:X2}";
+        }
+
+        public static bool Equals(FastIOColour colour1, FastIOColour colour2)
+        {
+            return (colour1.Red == colour2.Red) && (colour1.Green == colour2.Green) && (colour1.Blue == colour2.Blue);
+        }
+
+        public static FastIOColour Average(IEnumerable<FastIOColour> fastIOColours)
+        {
+            if (fastIOColours == null || fastIOColours.Count() == 0)
+                return ConstantData.Lights_Off;
+
+            if (fastIOColours.Count() == 1)
+                return fastIOColours.First();
+
+            var redAverage = fastIOColours.Select(x => x.Red).Sum(x => x) / fastIOColours.Count();
+            var greenAverage = fastIOColours.Select(x => x.Green).Sum(x => x) / fastIOColours.Count();
+            var blueAverage = fastIOColours.Select(x => x.Blue).Sum(x => x) / fastIOColours.Count();
+
+            return new FastIOColour((byte) redAverage, (byte) greenAverage, (byte) blueAverage);
         }
     }
 

@@ -1,5 +1,6 @@
 using ECommons;
 using ECommons.DalamudServices;
+using ECommons.GameFunctions;
 using ECommons.Hooks;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game;
@@ -34,6 +35,7 @@ namespace PuzdraLighting.LightingControllers
 
             Svc.ClientState.TerritoryChanged += OnInstanceChange;
             ActionEffect.ActionEffectEvent += OnActionEvent;
+            
 
             OnInstanceChange(Svc.ClientState.TerritoryType);
             CalculateWeather();
@@ -81,6 +83,15 @@ namespace PuzdraLighting.LightingControllers
 
                 var lightColor = anim.CalculateCurrentColourState(calcTime);
 
+                //No need to add to the averaging stack.
+                if (FastIOColour.Equals(Base, lightColor))
+                {
+                    Svc.Log.Verbose($"[{anim.GetType().Name}] Skipping adding to stacks as {Base} and {lightColor} match.");
+                    continue;
+                }
+
+                Svc.Log.Verbose($"[{anim.GetType().Name}] Adding {lightColor} to the enabled stacks.");
+
                 if (anim.FrontLighting)
                     frontPanelCalculation.Add(lightColor);
 
@@ -91,12 +102,12 @@ namespace PuzdraLighting.LightingControllers
                     rightPanelCalculation.Add(lightColor);
             }
 
-            //For now we're just going to take the first value in the list, eventually we should average the colour but Im lazy.
+            //Average the colours in the animation list. This is probably fine.
             //If there are no animations playing currently, take the base colour of the phase/instance/whatever or Off if the player is dead.
             P.LightingHelper.WriteRGBColourValues(
-                frontPanelCalculation.Count > 0 ? frontPanelCalculation[0] : (IsPlayerDead ? ConstantData.Lights_Off : Base),
-                leftPanelCalculations.Count > 0 ? leftPanelCalculations[0] : (IsPlayerDead ? ConstantData.Lights_Off : Base),
-                rightPanelCalculation.Count > 0 ? rightPanelCalculation[0] : (IsPlayerDead ? ConstantData.Lights_Off : Base));
+                frontPanelCalculation.Count > 0 ? FastIOColour.Average(frontPanelCalculation) : (IsPlayerDead ? ConstantData.Lights_Off : Base),
+                leftPanelCalculations.Count > 0 ? FastIOColour.Average(leftPanelCalculations) : (IsPlayerDead ? ConstantData.Lights_Off : Base),
+                rightPanelCalculation.Count > 0 ? FastIOColour.Average(rightPanelCalculation) : (IsPlayerDead ? ConstantData.Lights_Off : Base));
         }
 
         private void OnActionEvent(ECommons.Hooks.ActionEffectTypes.ActionEffectSet set)
@@ -117,10 +128,10 @@ namespace PuzdraLighting.LightingControllers
                 return;
 
             //Filtering out autos with no name from the logs.
-            if (!String.IsNullOrWhiteSpace(set.Action.Value.Name.ExtractText()))
+            if (P.Config.LogUnnamedActions || !String.IsNullOrWhiteSpace(set.Action.Value.Name.ExtractText()))
                 Svc.Log.Verbose($"[{set.Source?.Name ?? "Unknown Actor"}] Cast: {set.Action.Value.Name} ({set.Action.Value.RowId})");
 
-            var animation = ConstantData.GetAnimationBaseForAction(TerritoryId, set.Action.Value.RowId, Dull, Base, Bright);
+            var animation = ConstantData.GetAnimationBaseForAction(TerritoryId, set.Action.Value.RowId, set.Target.GameObjectId, set.TargetEffects.Select(x => x.TargetID).ToList(), Dull, Base, Bright);
             if (animation == null) 
                 return;
 
@@ -210,6 +221,7 @@ namespace PuzdraLighting.LightingControllers
 
     public enum AnimationType
     {
-        Pulse
+        Pulse,
+        ThreePointPulse
     }
 }
