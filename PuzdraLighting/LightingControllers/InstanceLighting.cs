@@ -57,10 +57,14 @@ namespace PuzdraLighting.LightingControllers
 
             var playerDiedThisFrame = HandleDeath();
 
-            if (playerDiedThisFrame)
+            if (playerDiedThisFrame != DeathAnimationState.None)
             {
                 //On this frame we can start an animation for death
-                Svc.Log.Debug($"Player has died.");
+                if (playerDiedThisFrame == DeathAnimationState.Died)
+                    Svc.Log.Debug($"Player has died.");
+
+                if (playerDiedThisFrame == DeathAnimationState.Raising)
+                    Svc.Log.Debug($"Player is raising.");
             }
 
             DateTime calcTime = DateTime.Now;
@@ -200,13 +204,21 @@ namespace PuzdraLighting.LightingControllers
             return true;
         }
 
-        public unsafe bool HandleDeath() 
+        public unsafe DeathAnimationState HandleDeath() 
         {
             var playerDeadLastFrame = IsPlayerDead;
             IsPlayerDead = Player.IsDead;
 
-            //If they do not match, and the player is dead, the player died this frame
-            return IsPlayerDead && playerDeadLastFrame != IsPlayerDead;
+            //If they do not match, the player changed state this frame.
+            var stateChangedThisFrame = playerDeadLastFrame != IsPlayerDead;
+
+            if (stateChangedThisFrame && IsPlayerDead)
+                return DeathAnimationState.Died;
+
+            if (stateChangedThisFrame && !IsPlayerDead)
+                return DeathAnimationState.Raising;
+
+            return DeathAnimationState.None;
         }
     }
 
@@ -223,5 +235,12 @@ namespace PuzdraLighting.LightingControllers
     {
         Pulse,
         ThreePointPulse
+    }
+
+    public enum DeathAnimationState
+    {
+        None,
+        Died,
+        Raising
     }
 }
