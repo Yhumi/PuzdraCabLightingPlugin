@@ -59,12 +59,36 @@ namespace PuzdraLighting.LightingControllers
 
             if (playerDiedThisFrame != DeathAnimationState.None)
             {
+                var deathFadeAnimation = new FadeAnimation()
+                {
+                    StartTime = DateTime.Now,
+                    HoldDelay = 0,
+                    Duration = 2000,
+
+                    FrontLighting = true,
+                    LeftLighting = true,
+                    RightLighting = true,
+
+                    RunWhenDead = true,
+                };
+
                 //On this frame we can start an animation for death
                 if (playerDiedThisFrame == DeathAnimationState.Died)
+                {
                     Svc.Log.Debug($"Player has died.");
+                    deathFadeAnimation.StartColour = Base;
+                    deathFadeAnimation.EndColour = ConstantData.Lights_Off;
+                }
+                    
 
                 if (playerDiedThisFrame == DeathAnimationState.Raising)
+                {
                     Svc.Log.Debug($"Player is raising.");
+                    deathFadeAnimation.StartColour = ConstantData.Lights_Off;
+                    deathFadeAnimation.EndColour = Base;    
+                }
+
+                animationStack.Add($"{nameof(InstanceLightingEventType.Raise)}-{DateTime.Now.ToString("HH:mm:ss.fffffff")}", deathFadeAnimation);
             }
 
             DateTime calcTime = DateTime.Now;
